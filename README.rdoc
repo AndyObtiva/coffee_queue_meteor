@@ -1,0 +1,15 @@
+== Coffee Queue
+
+This is a coffee ordering and fulfillment application that enables coffeeshop customers to submit requests online, via a
+physical panel in the coffeeshop, or to one of the barristas directly. Once the requested order is ready, the barrista 
+marks the order as fulfilled in the application so that the customer notices, pays the barrista, and
+grabs the fulfilled order. Once the order has been delivered, it disappears from the application visual display. 
+
+This is written as a Meteor web application to demonstrate its MongoDB live data-binding, continuous deployment, and server push capabilities.
+
+Project Specifications:
+https://docs.google.com/document/d/1yT65s1781Lh18Q4ulCMHxsB8AaelX_JpC78jmWpk_WU/edit?usp=sharing
+
+Prerequisites:
+* Node.js
+* Meteor

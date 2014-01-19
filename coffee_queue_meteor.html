@@ -1,5 +1,5 @@
 <head>
-  <title>coffee_queue_meteor</title>
+  <title>CoffeeQueue (Meteor Edition)</title>
 </head>
 
 <body>
@@ -12,25 +12,25 @@
 </body>
 
 <template name="order">
-  <input type="text" placeholder="Enter Name">
-  <!--<select>-->
-    <!--{{#each products}}-->
-      <!--<option>{{name}}</option>-->
-    <!--{{/each}}-->
-  <!--</select>-->
-  <!--<select>-->
-    <!--{{#each product_options}}-->
-    <!--<option>{{name}}</option>-->
-    <!--{{/each}}-->
-  <!--</select>-->
-  <input type="button" value="Submit Coffee Order" />
+  <input id="name" type="text" placeholder="Enter Name">
+  <select id="productName">
+    {{#each products}}
+      <option>{{name}}</option>
+    {{/each}}
+  </select>
+  <select id="productOptionName">
+    {{#each productOptions}}
+    <option>{{name}}</option>
+    {{/each}}
+  </select>
+  <input type="submit" value="Submit Coffee Order">
 </template>
 
 <template name="orders">
   <h1>Orders</h1>
   <ul>
     {{#each orders}}
-    <li>{{name}}</li>
+    <li>{{name}} - {{product.name}} - {{productOption.name}}</li>
     {{/each}}
   </ul>
 </template>

@@ -3,10 +3,13 @@
 </head>
 
 <body>
-  <div>
+  <div id="barista_sign_in_form">
+    {{> barista}}
+  </div>
+  <div id="order_form">
     {{> order}}
-   </div>
-  <div>
+  </div>
+  <div id="order_list">
     {{> orders}}
   </div>
 </body>
@@ -30,7 +33,20 @@
   <h1>Orders</h1>
   <ul>
     {{#each orders}}
-    <li>{{name}} - {{product.name}} - {{productOption.name}}</li>
+    <li>
+      {{#if currentUser}}
+        {{#if waiting}}
+        <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
+          <input type="button" value="Fulfill" id="{{name}}"> -
+        {{/if}}
+      {{/if}}
+      {{name}} - {{product.name}} - {{productOption.name}}
+    </li>
     {{/each}}
   </ul>
 </template>
+
+<template name="barista">
+  {{loginButtons}}
+</template>
+

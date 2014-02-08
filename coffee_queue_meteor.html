@@ -30,20 +30,30 @@
 </template>
 
 <template name="orders">
-  <h1>Orders</h1>
+  <h1>Orders In Progress</h1>
+  {{#if noOrdersInProgress}}
+    <p>No orders are currently in progress. Faster than the line!</p>
+  {{/if}}
   <ul>
-    {{#each orders}}
+    {{#each ordersInProgress}}
     <li>
       {{#if currentUser}}
-        {{#if waiting}}
         <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
-          <input type="button" value="Fulfill" id="{{name}}"> -
-        {{/if}}
+        <input type="button" value="Fulfill" id="{{name}}"> -
       {{/if}}
       {{name}} - {{product.name}} - {{productOption.name}}
     </li>
     {{/each}}
   </ul>
+  <h1>Orders Ready for Pickup</h1>
+  <ul>
+    {{#each readyOrders}}
+    <li>
+      {{name}} - {{product.name}} - {{productOption.name}}
+    </li>
+    {{/each}}
+  </ul>
+
 </template>
 
 <template name="barista">

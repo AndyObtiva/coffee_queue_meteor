@@ -51,9 +51,22 @@ if Meteor.isClient
       )
   )
 
-  Template.orders.orders = ->
-    _.map Orders.find().fetch(), (order) ->
+  Template.orders.ordersInProgress = ->
+    _.filter(_.map(Orders.find().fetch(), (order) ->
       new CustomerOrder(order)
+    ), (order) ->
+      order.waiting()
+    )
+
+  Template.orders.noOrdersInProgress = ->
+    Template.orders.ordersInProgress().length == 0
+
+  Template.orders.readyOrders = ->
+    _.filter(_.map(Orders.find().fetch(), (order) ->
+      new CustomerOrder(order)
+    ), (order) ->
+      order.ready()
+    )
 
   Template.orders.events({
     'click input[type=button][value=Fulfill]' : (event) ->

@@ -12,6 +12,9 @@
   <div id="order_list">
     {{> orders}}
   </div>
+  <div id="stats">
+    {{> stats}}
+  </div>
 </body>
 
 <template name="order">
@@ -41,7 +44,7 @@
         <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
         <input type="button" value="Fulfill" id="{{name}}"> -
       {{/if}}
-      {{name}} - {{product.name}} - {{productOption.name}}
+      {{name}} - {{product.name}} - {{productOption.name}} - Placed at {{createdAt}}
     </li>
     {{/each}}
   </ul>
@@ -49,11 +52,17 @@
   <ul>
     {{#each readyOrders}}
     <li>
-      {{name}} - {{product.name}} - {{productOption.name}}
+      {{name}} - {{product.name}} - {{productOption.name}} - Fulfilled at {{fulfilledAt}}
     </li>
     {{/each}}
   </ul>
 
+</template>
+
+<template name="stats">
+  <h1>Stats</h1>
+  Average Time to Fulfill Order:
+  {{averageWaitTime}} Seconds
 </template>
 
 <template name="barista">

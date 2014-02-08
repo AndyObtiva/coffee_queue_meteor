@@ -10,6 +10,12 @@ class CustomerOrder
   name: ->
     @order.name
 
+  createdAt: ->
+    @order.createdAt
+
+  fulfilledAt: ->
+    @order.fulfilledAt
+
   product: ->
     @order.product
 
@@ -41,6 +47,7 @@ if Meteor.isClient
     'click input[type=submit]' : (event) ->
       Orders.insert(
         name: $('input#name').val(),
+        createdAt: new Date(),
         product: {
           name: $('select#productName').val()
         },
@@ -50,6 +57,17 @@ if Meteor.isClient
         }
       )
   )
+
+  Template.stats.averageWaitTime = ->
+    averageTime = 0
+    count = 0
+    _.each(Template.orders.readyOrders(), (order) ->
+      console.log(order.fulfilledAt() && order.createdAt())
+      if order.fulfilledAt() && order.createdAt()
+        averageTime += (order.fulfilledAt() - order.createdAt())
+        count += 1
+    )
+    (averageTime / count) / 1000
 
   Template.orders.ordersInProgress = ->
     _.filter(_.map(Orders.find().fetch(), (order) ->
@@ -74,7 +92,14 @@ if Meteor.isClient
       order = Orders.findOne(name: customerName)
       Orders.update(
         {_id: order._id},
-        {name: order.name, product: order.product, productOption: order.productOption, state: 'ready'}
+        {
+          name: order.name,
+          product: order.product,
+          productOption: order.productOption,
+          createdAt: order.createdAt,
+          state: 'ready',
+          fulfilledAt: new Date()
+        }
       )
   })
 

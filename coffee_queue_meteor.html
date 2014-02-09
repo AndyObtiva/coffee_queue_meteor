@@ -18,18 +18,20 @@
 </body>
 
 <template name="order">
-  <input id="name" type="text" placeholder="Enter Name">
-  <select id="productName">
-    {{#each products}}
+  <form id="orderForm">
+    <input id="name" type="text" placeholder="Enter Name">
+    <select id="productName">
+      {{#each products}}
       <option>{{name}}</option>
-    {{/each}}
-  </select>
-  <select id="productOptionName">
-    {{#each productOptions}}
-    <option>{{name}}</option>
-    {{/each}}
-  </select>
-  <input type="submit" value="Submit Coffee Order">
+      {{/each}}
+    </select>
+    <select id="productOptionName">
+      {{#each productOptions}}
+      <option>{{name}}</option>
+      {{/each}}
+    </select>
+    <input type="submit" value="Submit Coffee Order">
+  </form>
 </template>
 
 <template name="orders">

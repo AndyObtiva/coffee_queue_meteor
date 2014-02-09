@@ -2,6 +2,15 @@ Orders = new Meteor.Collection("orders")
 Products = new Meteor.Collection("products")
 ProductOptions = new Meteor.Collection("productOptions")
 Baristas = Meteor.users
+formDescriptionObject = {
+  id: "orderForm"
+  fields:{
+    name: {
+      required: true
+    },
+  }
+}
+Mesosphere(formDescriptionObject)
 
 class CustomerOrder
   constructor: (order) ->
@@ -45,7 +54,7 @@ if Meteor.isClient
     ,
     # TODO support ENTER key submit of form (seems disabled in Meteor by default) [http://stackoverflow.com/questions/13010151/input-text-return-event-in-meteor]
     'click input[type=submit]' : (event) ->
-      Orders.insert(
+      rawFormData = {
         name: $('input#name').val(),
         createdAt: new Date(),
         product: {
@@ -55,14 +64,23 @@ if Meteor.isClient
           name: $('select#productOptionName').val(),
           productName: $('select#productName').val()
         }
-      )
+      }
+      Mesosphere.orderForm.validate rawFormData, (errors, formData) ->
+        if errors
+          $('#orderForm input#name').addClass('error')
+        else
+          $('#orderForm input#name').removeClass('error')
+          Orders.insert(
+            rawFormData
+          )
+
+
   )
 
   Template.stats.averageWaitTime = ->
     averageTime = 0
     count = 0
     _.each(Template.orders.readyOrders(), (order) ->
-      console.log(order.fulfilledAt() && order.createdAt())
       if order.fulfilledAt() && order.createdAt()
         averageTime += (order.fulfilledAt() - order.createdAt())
         count += 1

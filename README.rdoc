@@ -10,6 +10,9 @@ This is written as a Meteor web application to demonstrate its MongoDB live data
 Project Specifications:
 https://docs.google.com/document/d/1yT65s1781Lh18Q4ulCMHxsB8AaelX_JpC78jmWpk_WU/edit?usp=sharing
 
+Hosted at:
+http://coffee-queue.meteor.com
+
 Prerequisites:
 * Node.js
 * Meteor

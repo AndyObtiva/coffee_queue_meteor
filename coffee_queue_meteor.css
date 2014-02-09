@@ -1,1 +1,9 @@
 /* CSS declarations go here */
+
+.error {
+  border: 1px solid red;
+}
+
+#orderForm input#name.error::after {
+  content: "not valid";
+}

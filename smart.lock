@@ -1,23 +1,7 @@
 {
   "meteor": {},
   "dependencies": {
-    "basePackages": {
-      "Mesosphere": {
-        "git": "https://github.com/copleykj/Mesosphere.git",
-        "branch": "beta"
-      }
-    },
-    "packages": {
-      "Mesosphere": {
-        "git": "https://github.com/copleykj/Mesosphere.git",
-        "branch": "beta",
-        "commit": "d45fc7edc1b02d3ab1b4d3d8ec2143ea5e0abcae"
-      },
-      "underscore-string-latest": {
-        "git": "https://github.com/TimHeckel/meteor-underscore-string.git",
-        "tag": "v2.3.3",
-        "commit": "4a5d70eee48fbd90a6e6fc78747250d704a0b3bb"
-      }
-    }
+    "basePackages": {},
+    "packages": {}
   }
 }

@@ -1,9 +1,8 @@
 {
   "packages": {
-    "autoform": {},
     "Mesosphere": {
-      "git":"https://github.com/copleykj/Mesosphere.git",
-      "branch":"beta"
+      "git": "https://github.com/copleykj/Mesosphere.git",
+      "branch": "beta"
     }
   }
 }

@@ -2,29 +2,16 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "autoform": {},
-      "Mesosphere": {}
-    },
-    "packages": {
-      "autoform": {
-        "git": "https://github.com/aldeed/meteor-autoform.git",
-        "tag": "v0.4.13",
-        "commit": "105803e4d42308893fbda30585dbdb4a38077e9a"
-      },
       "Mesosphere": {
         "git": "https://github.com/copleykj/Mesosphere.git",
-        "tag": "v0.1.7",
-        "commit": "c4ce245d6cfe3d0e24d85d0e9950a171133cf818"
-      },
-      "simple-schema": {
-        "git": "https://github.com/aldeed/meteor-simple-schema.git",
-        "tag": "v0.2.36",
-        "commit": "d01745787de0711ffd095dcd212749d94a3fe0eb"
-      },
-      "moment": {
-        "git": "https://github.com/acreeger/meteor-moment.git",
-        "tag": "v2.5.1",
-        "commit": "8c9bc5d3fc96705057737cb9743d555417f6e551"
+        "branch": "beta"
+      }
+    },
+    "packages": {
+      "Mesosphere": {
+        "git": "https://github.com/copleykj/Mesosphere.git",
+        "branch": "beta",
+        "commit": "d45fc7edc1b02d3ab1b4d3d8ec2143ea5e0abcae"
       },
       "underscore-string-latest": {
         "git": "https://github.com/TimHeckel/meteor-underscore-string.git",

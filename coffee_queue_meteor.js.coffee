@@ -1,6 +1,14 @@
 Orders = new Meteor.Collection("orders")
 Products = new Meteor.Collection("products")
 ProductOptions = new Meteor.Collection("productOptions")
+#TODO add collection data security
+#Orders.allow(
+#  remove: (userId, order) ->
+#    true;
+#);
+@Orders = Meteor.orders = Orders
+@Products = Meteor.products = Products
+@ProductOptions = Meteor.productOptions = ProductOptions
 Baristas = Meteor.users
 formDescriptionObject = {
   id: "orderForm"
@@ -67,9 +75,9 @@ if Meteor.isClient
       }
       Mesosphere.orderForm.validate rawFormData, (errors, formData) ->
         if errors
-          $('#orderForm input#name').addClass('error')
+          $('#orderForm span').addClass('error')
         else
-          $('#orderForm input#name').removeClass('error')
+          $('#orderForm span').removeClass('error')
           Orders.insert(
             rawFormData
           )
@@ -81,7 +89,9 @@ if Meteor.isClient
     averageTime = 0
     count = 0
     _.each(Template.orders.readyOrders(), (order) ->
-      if order.fulfilledAt() && order.createdAt()
+      oneHourAgo = 60.minutes.ago
+      console.log(oneHourAgo)
+      if order.fulfilledAt() && order.createdAt() && order.createdAt() > oneHourAgo
         averageTime += (order.fulfilledAt() - order.createdAt())
         count += 1
     )
@@ -125,6 +135,7 @@ if Meteor.isServer
   Meteor.startup ->
 #    Products.remove({})
 #    ProductOptions.remove({})
+    Orders.remove({})
     if Products.find().count() == 0
       names = {
           "Filtered": ["Large", "Medium", "Small"],

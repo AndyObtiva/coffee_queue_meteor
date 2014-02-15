@@ -1,6 +1,8 @@
 {
   "packages": {
-    "autoform": {},
+    "an.hour.ago": {
+      "path": "packages/an.hour.ago"
+    },
     "Mesosphere": {
       "git":"https://github.com/copleykj/Mesosphere.git",
       "branch":"beta"

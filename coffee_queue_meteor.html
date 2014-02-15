@@ -19,7 +19,9 @@
 
 <template name="order">
   <form id="orderForm">
-    <input id="name" type="text" placeholder="Enter Name">
+    <span>
+      <input id="name" type="text" placeholder="Enter Name">
+    </span>
     <select id="productName">
       {{#each products}}
       <option>{{name}}</option>
@@ -63,7 +65,7 @@
 
 <template name="stats">
   <h1>Stats</h1>
-  Average Time to Fulfill Order:
+  Average Time to Fulfill Orders (last hour):
   {{averageWaitTime}} Seconds
 </template>
 

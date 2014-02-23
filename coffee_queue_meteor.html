@@ -46,7 +46,7 @@
     <li>
       {{#if currentUser}}
         <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
-        <input type="button" value="Fulfill" id="{{name}}"> -
+        <input type="button" value="Fulfill" data-name="{{name}}"> -
       {{/if}}
       {{name}} - {{product.name}} - {{productOption.name}} - Placed at {{createdAt}}
     </li>
@@ -56,6 +56,10 @@
   <ul>
     {{#each readyOrders}}
     <li>
+      {{#if currentUser}}
+        <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
+        <input type="button" value="Serve" data-name="{{name}}"> -
+      {{/if}}
       {{name}} - {{product.name}} - {{productOption.name}} - Fulfilled at {{fulfilledAt}}
     </li>
     {{/each}}

@@ -23,27 +23,16 @@ Mesosphere(formDescriptionObject)
 class CustomerOrder
   constructor: (order) ->
     @order = order
-
-  name: ->
-    @order.name
-
-  createdAt: ->
-    @order.createdAt
-
-  fulfilledAt: ->
-    @order.fulfilledAt
-
-  product: ->
-    @order.product
-
-  productOption: ->
-    @order.productOption
+    $.extend(this, @order)
 
   waiting: ->
     !@order.state
 
   ready: ->
     @order.state == 'ready'
+
+  served: ->
+    @order.state == 'served'
 
 if Meteor.isClient
   Accounts.ui.config(passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL')
@@ -88,11 +77,10 @@ if Meteor.isClient
   Template.stats.averageWaitTime = ->
     averageTime = 0
     count = 0
-    _.each(Template.orders.readyOrders(), (order) ->
+    _.each(Template.orders.servedOrders(), (order) ->
       oneHourAgo = 60.minutes.ago
-      console.log(oneHourAgo)
-      if order.fulfilledAt() && order.createdAt() && order.createdAt() > oneHourAgo
-        averageTime += (order.fulfilledAt() - order.createdAt())
+      if order.fulfilledAt && order.createdAt && order.createdAt > oneHourAgo
+        averageTime += (order.fulfilledAt - order.createdAt)
         count += 1
     )
     (averageTime / count) / 1000
@@ -114,10 +102,19 @@ if Meteor.isClient
       order.ready()
     )
 
+  Template.orders.servedOrders = ->
+    _.filter(_.map(Orders.find().fetch(), (order) ->
+      new CustomerOrder(order)
+    ), (order) ->
+      order.served()
+    )
+
   Template.orders.events({
-    'click input[type=button][value=Fulfill]' : (event) ->
-      customerName = $(event.target).attr('id')
-      order = Orders.findOne(name: customerName)
+    'click input[type=button]' : (event) ->
+      customerName = $(event.target).data('name')
+      order = new CustomerOrder(Orders.findOne(name: customerName))
+      newStatus = if order.waiting() then 'ready' else 'served'
+      fulfilledAt = if order.waiting() then new Date() else order.fulfilledAt
       Orders.update(
         {_id: order._id},
         {
@@ -125,8 +122,8 @@ if Meteor.isClient
           product: order.product,
           productOption: order.productOption,
           createdAt: order.createdAt,
-          state: 'ready',
-          fulfilledAt: new Date()
+          state: newStatus,
+          fulfilledAt: fulfilledAt
         }
       )
   })

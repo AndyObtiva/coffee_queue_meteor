@@ -34,6 +34,9 @@ class CustomerOrder
   served: ->
     @order.state == 'served'
 
+  fulfilled: ->
+    !!@order.fulfilledAt
+
 if Meteor.isClient
   Accounts.ui.config(passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL')
 
@@ -75,9 +78,11 @@ if Meteor.isClient
   )
 
   Template.stats.averageWaitTime = ->
+    fulfilledOrders = Template.orders.fulfilledOrders()
+    return 0 if fulfilledOrders.length == 0
     averageTime = 0
     count = 0
-    _.each(Template.orders.servedOrders(), (order) ->
+    _.each(fulfilledOrders, (order) ->
       oneHourAgo = 60.minutes.ago
       if order.fulfilledAt && order.createdAt && order.createdAt > oneHourAgo
         averageTime += (order.fulfilledAt - order.createdAt)
@@ -85,29 +90,20 @@ if Meteor.isClient
     )
     (averageTime / count) / 1000
 
+  Template.orders.customerOrders = ->
+    _.map(Orders.find().fetch(), (order) -> new CustomerOrder(order))
+
   Template.orders.ordersInProgress = ->
-    _.filter(_.map(Orders.find().fetch(), (order) ->
-      new CustomerOrder(order)
-    ), (order) ->
-      order.waiting()
-    )
+    _.filter(Template.orders.customerOrders(), (order) -> order.waiting())
 
   Template.orders.noOrdersInProgress = ->
     Template.orders.ordersInProgress().length == 0
 
   Template.orders.readyOrders = ->
-    _.filter(_.map(Orders.find().fetch(), (order) ->
-      new CustomerOrder(order)
-    ), (order) ->
-      order.ready()
-    )
+    _.filter(Template.orders.customerOrders(), (order) -> order.ready())
 
-  Template.orders.servedOrders = ->
-    _.filter(_.map(Orders.find().fetch(), (order) ->
-      new CustomerOrder(order)
-    ), (order) ->
-      order.served()
-    )
+  Template.orders.fulfilledOrders = ->
+    _.filter(Template.orders.customerOrders(), (order) -> order.fulfilled())
 
   Template.orders.events({
     'click input[type=button]' : (event) ->

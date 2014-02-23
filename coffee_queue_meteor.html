@@ -1,19 +1,24 @@
 <head>
   <title>CoffeeQueue (Meteor Edition)</title>
+  <link href='http://fonts.googleapis.com/css?family=Russo+One' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
-  <div id="barista_sign_in_form">
-    {{> barista}}
+  <div id="barista_actions" class="main-lane">
+    <div class="main-lane box">
+      {{> barista}}
+    </div>
   </div>
-  <div id="order_form">
+  <div id="coffee_request_form" class="main-lane">
     {{> order}}
   </div>
-  <div id="order_list">
+  <div id="order_list" class="main-lane">
     {{> orders}}
   </div>
   <div id="stats">
-    {{> stats}}
+    <div class="main-lane box">
+      {{> stats}}
+    </div>
   </div>
 </body>
 
@@ -22,6 +27,7 @@
     <span>
       <input id="name" type="text" placeholder="Enter Name">
     </span>
+    <br>
     <select id="productName">
       {{#each products}}
       <option>{{name}}</option>
@@ -37,38 +43,54 @@
 </template>
 
 <template name="orders">
-  <h1>Orders In Progress</h1>
-  {{#if noOrdersInProgress}}
+  <div id="waiting" class="step box">
+    <h1>Orders In Progress</h1>
+    {{#if noOrdersInProgress}}
     <p>No orders are currently in progress. Faster than the line!</p>
-  {{/if}}
-  <ul>
-    {{#each ordersInProgress}}
-    <li>
-      {{#if currentUser}}
-        <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
-        <input type="button" value="Fulfill" data-name="{{name}}"> -
-      {{/if}}
-      {{name}} - {{product.name}} - {{productOption.name}} - Placed at {{createdAt}}
-    </li>
-    {{/each}}
-  </ul>
-  <h1>Orders Ready for Pickup</h1>
-  <ul>
-    {{#each readyOrders}}
-    <li>
-      {{#if currentUser}}
-        <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
-        <input type="button" value="Serve" data-name="{{name}}"> -
-      {{/if}}
-      {{name}} - {{product.name}} - {{productOption.name}} - Fulfilled at {{fulfilledAt}}
-    </li>
-    {{/each}}
-  </ul>
-
+    {{/if}}
+    <table>
+      {{#each ordersInProgress}}
+      <tr>
+        <td>
+          {{name}}
+        </td>
+        <td>
+          ({{product.name}} - {{productOption.name}})
+        </td>
+        <td>
+          {{#if currentUser}}
+            <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
+            <input type="button" value="Fulfill" data-name="{{name}}">
+          {{/if}}
+        </td>
+      </tr>
+      {{/each}}
+    </table>
+  </div>
+  <div id="ready" class="step box">
+    <h1>Orders Ready for Pickup</h1>
+    <table>
+      {{#each readyOrders}}
+      <tr>
+        <td>
+          {{name}}
+        </td>
+        <td>
+          ({{product.name}} - {{productOption.name}})
+        </td>
+        <td>
+          {{#if currentUser}}
+            <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
+            <input type="button" value="Serve" data-name="{{name}}">
+          {{/if}}
+        </td>
+      </tr>
+      {{/each}}
+    </table>
+  </div>
 </template>
 
 <template name="stats">
-  <h1>Stats</h1>
   Average Wait Time in the Last Hour:
   {{averageWaitTime}} Seconds
 </template>

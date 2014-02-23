@@ -1,0 +1,96 @@
+html
+  width: 100%;
+  height: 100%;
+
+  body
+    background: url('images/coffee-counter-barista.jpg') no-repeat top center;
+    background-position: 0 -50px;
+    width: 100%;
+    height: 100%;
+    font-family: 'Russo One', sans-serif;
+    font-size: 1.1em;
+    color: black;
+
+    ul
+      list-style: none;
+      margin-top: 20px;
+      padding: 0;
+      li
+        margin: 0;
+        padding: 0;
+
+    table
+      tr
+        td
+          min-width 100px
+          text-align left
+
+    form
+      input, select
+        font-size: 1.5em;
+
+    .error input
+      border 1px solid red
+      box-shadow 3px 3px red
+    
+    #coffee_request_form .error::after
+      content "not valid"
+
+    .main-lane
+      margin 20px auto
+      text-align center
+      clear both
+
+    #order_queue
+      clear: both;
+
+    .value_false
+      display: none;
+
+    .box
+      position: relative;
+      overflow-y: auto;
+      padding: 0 20px 20px;
+      background-color: #fff;
+      -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+      -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+      opacity:0.7;
+
+    .box.step
+      display inline-block
+      height 420px
+      max-width 400px
+      margin: 20px 6%;
+
+    .box.main-lane
+      padding 20px
+      max-width 500px
+
+    //.box:before, .box:after
+    //  position: absolute;
+    //  width: 40%;
+    //  height: 10px;
+    //  content: ' ';
+    //  left: 12px;
+    //  bottom: 12px;
+    //  background: transparent;
+    //  -webkit-transform: skew(-5deg) rotate(-5deg);
+    //  -moz-transform: skew(-5deg) rotate(-5deg);
+    //  -ms-transform: skew(-5deg) rotate(-5deg);
+    //  -o-transform: skew(-5deg) rotate(-5deg);
+    //  transform: skew(-5deg) rotate(-5deg);
+    //  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    //  -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    //  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    //  z-index: -1;
+
+    //.box:after
+    //  left: auto;
+    //  right: 12px;
+    //  -webkit-transform: skew(5deg) rotate(5deg);
+    //  -moz-transform: skew(5deg) rotate(5deg);
+    //  -ms-transform: skew(5deg) rotate(5deg);
+    //  -o-transform: skew(5deg) rotate(5deg);
+    //  transform: skew(5deg) rotate(5deg);
+

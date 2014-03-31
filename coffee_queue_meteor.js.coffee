@@ -9,6 +9,7 @@ ProductOptions = new Meteor.Collection("productOptions")
 @Orders = Meteor.orders = Orders
 @Products = Meteor.products = Products
 @ProductOptions = Meteor.productOptions = ProductOptions
+
 Baristas = Meteor.users
 formDescriptionObject = {
   id: "orderForm"
@@ -77,18 +78,31 @@ if Meteor.isClient
 
   )
 
-  Template.stats.averageWaitTime = ->
-    fulfilledOrders = Template.orders.fulfilledOrders()
-    return 0 if fulfilledOrders.length == 0
+  Template.stats.averageWaitTimeForOrders = (orders) ->
+    return 0 if orders.length == 0
     averageTime = 0
     count = 0
-    _.each(fulfilledOrders, (order) ->
+    _.each(orders, (order) ->
       oneHourAgo = 60.minutes.ago
       if order.fulfilledAt && order.createdAt && order.createdAt > oneHourAgo
         averageTime += (order.fulfilledAt - order.createdAt)
         count += 1
     )
     (averageTime / count) / 1000
+
+  Template.stats.averageWaitTime = ->
+    fulfilledOrders = Template.orders.fulfilledOrders()
+    parseInt(Template.stats.averageWaitTimeForOrders(fulfilledOrders))
+
+  Template.stats.fastestBarista = ->
+    baristas = Baristas.find().fetch()
+    _.each baristas, (barista) =>
+      baristaOrders = Orders.find(baristaId: barista._id).fetch()
+      averageTime = Template.stats.averageWaitTimeForOrders(baristaOrders)
+      barista.averageTime = averageTime unless averageTime == 0
+
+    _.min baristas, (barista) -> barista.averageTime
+
 
   Template.orders.customerOrders = ->
     _.map(Orders.find().fetch(), (order) -> new CustomerOrder(order))
@@ -107,8 +121,9 @@ if Meteor.isClient
 
   Template.orders.events({
     'click input[type=button]' : (event) ->
-      customerName = $(event.target).data('name')
-      order = new CustomerOrder(Orders.findOne(name: customerName))
+      customerId = $(event.target).data('id')
+      order = Orders.findOne({_id: customerId})
+      order = new CustomerOrder(order)
       newStatus = if order.waiting() then 'ready' else 'served'
       fulfilledAt = if order.waiting() then new Date() else order.fulfilledAt
       Orders.update(
@@ -119,7 +134,8 @@ if Meteor.isClient
           productOption: order.productOption,
           createdAt: order.createdAt,
           state: newStatus,
-          fulfilledAt: fulfilledAt
+          fulfilledAt: fulfilledAt,
+          baristaId: Meteor.userId()
         }
       )
   })
@@ -128,7 +144,7 @@ if Meteor.isServer
   Meteor.startup ->
 #    Products.remove({})
 #    ProductOptions.remove({})
-    Orders.remove({})
+#    Orders.remove({})
     if Products.find().count() == 0
       names = {
           "Filtered": ["Large", "Medium", "Small"],

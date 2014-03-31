@@ -60,7 +60,7 @@
         <td>
           {{#if currentUser}}
             <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
-            <input type="button" value="Fulfill" data-name="{{name}}">
+            <input type="button" value="Fulfill" data-name="{{name}}" data-id="{{_id}}">
           {{/if}}
         </td>
       </tr>
@@ -81,7 +81,7 @@
         <td>
           {{#if currentUser}}
             <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
-            <input type="button" value="Serve" data-name="{{name}}">
+            <input type="button" value="Serve" data-name="{{name}}" data-id="{{_id}}">
           {{/if}}
         </td>
       </tr>
@@ -91,8 +91,16 @@
 </template>
 
 <template name="stats">
-  Average Wait Time in the Last Hour:
-  {{averageWaitTime}} Seconds
+  <ul>
+    <li>
+      Average Wait Time in the Last Hour:
+      {{averageWaitTime}} Seconds
+    </li>
+    <li>
+      Fastest Barista in the Last Minute:
+      {{fastestBarista.username}}
+    </li>
+  </ul>
 </template>
 
 <template name="barista">

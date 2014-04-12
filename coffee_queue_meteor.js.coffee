@@ -38,6 +38,11 @@ class CustomerOrder
   fulfilled: ->
     !!@order.fulfilledAt
 
+  fulfillmentTime: ->
+    time = @order.fulfilledAt - @order.createdAt
+    time = if (time == Infinity) or (time == NaN) then 999999 else time
+    time
+
 if Meteor.isClient
   Accounts.ui.config(passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL')
 
@@ -85,7 +90,7 @@ if Meteor.isClient
     _.each(orders, (order) ->
       oneHourAgo = 60.minutes.ago
       if order.fulfilledAt && order.createdAt && order.createdAt > oneHourAgo
-        averageTime += (order.fulfilledAt - order.createdAt)
+        averageTime += (order.fulfillmentTime())
         count += 1
     )
     (averageTime / count) / 1000
@@ -98,14 +103,16 @@ if Meteor.isClient
     baristas = Baristas.find().fetch()
     _.each baristas, (barista) =>
       baristaOrders = Orders.find(baristaId: barista._id).fetch()
-      averageTime = Template.stats.averageWaitTimeForOrders(baristaOrders)
-      barista.averageTime = averageTime unless averageTime == 0
+      customerOrders = Template.orders.customerOrders(baristaOrders)
+      fastestOrder = _.min customerOrders, (customerOrder) -> customerOrder.fulfillmentTime()
+      barista.fastestTime = if customerOrders.length then fastestOrder.fulfillmentTime() else 999999
 
-    _.min baristas, (barista) -> barista.averageTime
+    _.min baristas, (barista) -> barista.fastestTime
 
 
-  Template.orders.customerOrders = ->
-    _.map(Orders.find().fetch(), (order) -> new CustomerOrder(order))
+  Template.orders.customerOrders = (orders=null) ->
+    orders = Orders.find().fetch() unless orders
+    _.map(orders, (order) -> new CustomerOrder(order))
 
   Template.orders.ordersInProgress = ->
     _.filter(Template.orders.customerOrders(), (order) -> order.waiting())

@@ -11,6 +11,7 @@ ProductOptions = new Meteor.Collection("productOptions")
 @ProductOptions = Meteor.productOptions = ProductOptions
 
 Baristas = Meteor.users
+
 formDescriptionObject = {
   id: "orderForm"
   fields:{
@@ -23,25 +24,23 @@ Mesosphere(formDescriptionObject)
 
 class CustomerOrder
   constructor: (order) ->
-    @order = order
-    $.extend(this, @order)
+    $.extend(this, order)
 
   waiting: ->
-    !@order.state
+    !@state
 
   ready: ->
-    @order.state == 'ready'
+    @state == 'ready'
 
   served: ->
-    @order.state == 'served'
+    @state == 'served'
 
   fulfilled: ->
-    !!@order.fulfilledAt
+    !!@fulfilledAt
 
   fulfillmentTime: ->
-    time = @order.fulfilledAt - @order.createdAt
-    time = if (time == Infinity) or (time == NaN) then 999999 else time
-    time
+    time = @fulfilledAt - @createdAt
+    if (time == NaN) then Infinity else time
 
 if Meteor.isClient
   Accounts.ui.config(passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL')
@@ -147,11 +146,17 @@ if Meteor.isClient
       )
   })
 
+#  Template.loginButtons.events({
+#    'click #login-buttons' : (event) ->
+#      $('.main-lane.box').animate({height: 400})
+#  })
+
 if Meteor.isServer
   Meteor.startup ->
 #    Products.remove({})
 #    ProductOptions.remove({})
 #    Orders.remove({})
+#    Baristas.remove({})
     if Products.find().count() == 0
       names = {
           "Filtered": ["Large", "Medium", "Small"],
@@ -159,9 +164,12 @@ if Meteor.isServer
           "Espresso": ["Single", "Double"],
           "Cappuccino": ["Standard"],
           "Mocha": ["Regular", "Regular Skim", "White", "White Skim", "Marble", "Marble Skim"],
-          "Americano": ["Standard"]
+          "Americano": ["Standard"],
+          "Machiato": ["Regular", "Caramel"],
+          "Frappucino": ["Regular", "Chocolate", "Vanilla"],
+          "Cuban": ["Cortado", "Cortadito", "Cafe Con Leche"]
       };
-      for name in names
+      for name of names
         Products.insert({name: name})
         options = names[name]
         ProductOptions.insert(productName: name, name: option) for option in options

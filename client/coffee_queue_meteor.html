@@ -93,12 +93,21 @@
 <template name="stats">
   <ul>
     <li>
-      Average Wait Time in the Last Hour:
+      Average Wait Time in the Last Hour:<br>
       {{averageWaitTime}} Seconds
     </li>
     <li>
-      Fastest Barista in the Last Hour:
-      {{fastestBarista.username}} - {{fastestBarista.fastestTime}} seconds
+      Fastest Barista in the Last Hour:<br>
+      <span class="username">
+        {{fastestBarista.username}}
+      </span>
+      <span class="email">
+        &lt; {{fastestBarista.emailAddress}} &gt;
+      </span>
+      -
+      <span class="fastestTime">
+        {{fastestBarista.fastestTime}} seconds
+      </span>
     </li>
   </ul>
 </template>

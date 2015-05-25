@@ -1,15 +1,15 @@
 # Meteor packages used by this project, one per line.
+# Check this file (and the other files in this directory) into your repository.
 #
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-standard-app-packages
+meteor-platform
 autopublish
 insecure
-preserve-inputs
-accounts-password
 accounts-ui
+accounts-password
 coffeescript
-Mesosphere
-an.hour.ago
 stylus
+copleykj:mesosphere
+momentjs:moment

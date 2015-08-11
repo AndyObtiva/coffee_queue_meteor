@@ -75,9 +75,9 @@ Template.orders.events
         baristaId: Meteor.userId()
       }
     )
-    
 
-Template.stats.helpers 
+
+Template.stats.helpers
   averageWaitTimeForOrders : (orders) ->
     return 0 if orders.length == 0
     averageTime = 0
@@ -100,7 +100,7 @@ Template.stats.helpers
       baristaOrders = Orders.find(baristaId: barista._id).fetch()
       customerOrders = Template.orders.__helpers.get('customerOrders')(baristaOrders)
       fastestOrder = _.min customerOrders, (customerOrder) -> customerOrder.fulfillmentTime()
-      barista.fastestTime = if customerOrders.length then fastestOrder.fulfillmentTime() else 999999
+      barista.fastestTime = parseInt((if customerOrders.length then fastestOrder.fulfillmentTime() else 999999)/1000)
 
     fastest = _.min baristas, (barista) -> barista.fastestTime
     fastest.emailAddress = fastest.emails[0].address

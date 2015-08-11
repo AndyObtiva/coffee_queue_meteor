@@ -1,0 +1,1 @@
+@Baristas = Meteor.users

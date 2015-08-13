@@ -16,6 +16,11 @@ Template.order.helpers
     productName = Session.get("productName") || 'Filtered'
     ProductOptions.find({productName: productName}).fetch()
 
+Template.loginButtons.events
+  'click .login-link-text' : (event) ->
+    $('#login-dropdown-list').css('opacity', 0)
+    $('#login-dropdown-list').animate('opacity': 1)
+
 Template.order.events
   'change select#productName' : (event) ->
     Session.set("productName", $('select#productName').val())

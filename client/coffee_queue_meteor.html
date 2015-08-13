@@ -4,114 +4,115 @@
 </head>
 
 <body>
-  <div id="barista_actions" class="main-lane">
-    <div class="main-lane box">
-      {{> barista}}
-    </div>
-  </div>
-  <div id="coffee_request_form" class="main-lane">
+  <div id="body-content">
+    {{> barista}}
     {{> order}}
-  </div>
-  <div id="order_list" class="main-lane">
+    {{> stats}}
     {{> orders}}
-  </div>
-  <div id="stats">
-    <div class="main-lane box">
-      {{> stats}}
-    </div>
   </div>
 </body>
 
+<template name="barista">
+  <div id="barista_actions" class="main-lane box">
+    <h1>CoffeeQueue</h1>
+    <h2>Express Coffee Service</h2>
+    {{> loginButtons}}
+  </div>
+</template>
+
 <template name="order">
-  <form id="orderForm">
-    <span>
-      <input id="name" type="text" placeholder="Enter Name">
-    </span>
-    <br>
-    <select id="productName">
-      {{#each products}}
-      <option>{{name}}</option>
-      {{/each}}
-    </select>
-    <select id="productOptionName">
-      {{#each productOptions}}
-      <option>{{name}}</option>
-      {{/each}}
-    </select>
-    <input type="submit" value="Submit Coffee Order">
-  </form>
+  <div id="coffee_request_form" class="main-lane box">
+    <form id="orderForm">
+      <div class="row">
+        <input id="name" type="text" placeholder="Enter Name">
+      </div>
+      <div class="row">
+        <select id="productName">
+          {{#each products}}
+          <option>{{name}}</option>
+          {{/each}}
+        </select>
+        <select id="productOptionName">
+          {{#each productOptions}}
+          <option>{{name}}</option>
+          {{/each}}
+        </select>
+        <input type="submit" value="Request Coffee">
+      </div>
+    </form>
+  </div>
 </template>
 
 <template name="orders">
-  <div id="waiting" class="step box">
-    <h1>Orders Waiting To Fullfill</h1>
-    {{#if noOrdersInProgress}}
-    <p>No orders are currently in progress. Faster than the line!</p>
-    {{/if}}
-    <table>
-      {{#each ordersInProgress}}
-      <tr>
-        <td>
-          {{name}}
-        </td>
-        <td>
-          ({{product.name}} - {{productOption.name}})
-        </td>
-        <td>
-          {{#if currentUser}}
-            <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
-            <input type="button" value="Fulfill" data-name="{{name}}" data-id="{{_id}}">
-          {{/if}}
-        </td>
-      </tr>
-      {{/each}}
-    </table>
-  </div>
-  <div id="ready" class="step box">
-    <h1>Orders Ready for Pickup</h1>
-    <table>
-      {{#each readyOrders}}
-      <tr>
-        <td>
-          {{name}}
-        </td>
-        <td>
-          ({{product.name}} - {{productOption.name}})
-        </td>
-        <td>
-          {{#if currentUser}}
-            <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
-            <input type="button" value="Serve" data-name="{{name}}" data-id="{{_id}}">
-          {{/if}}
-        </td>
-      </tr>
-      {{/each}}
-    </table>
+  <div id="order_list" class="main-lane">
+    <div id="waiting" class="step box">
+      <h1>Waiting for Order</h1>
+      {{#if noOrdersInProgress}}
+      <p>No orders are currently in progress. Faster than the line!</p>
+      {{/if}}
+      <table>
+        {{#each ordersInProgress}}
+        <tr>
+          <td>
+            {{name}}
+          </td>
+          <td>
+            ({{product.name}} - {{productOption.name}})
+          </td>
+          <td>
+            {{#if currentUser}}
+              <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
+              <input type="button" value="Fulfill" data-name="{{name}}" data-id="{{_id}}">
+            {{/if}}
+          </td>
+        </tr>
+        {{/each}}
+      </table>
+    </div>
+    <div id="ready" class="step box">
+      <h1>Ready for Pickup</h1>
+      <table>
+        {{#each readyOrders}}
+        <tr>
+          <td>
+            {{name}}
+          </td>
+          <td>
+            ({{product.name}} - {{productOption.name}})
+          </td>
+          <td>
+            {{#if currentUser}}
+              <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
+              <input type="button" value="Serve" data-name="{{name}}" data-id="{{_id}}">
+            {{/if}}
+          </td>
+        </tr>
+        {{/each}}
+      </table>
+    </div>
   </div>
 </template>
 
 <template name="stats">
-  <ul>
-    <li>
-      Average Wait Time in the Last Hour:<br>
-      {{averageWaitTime}} Seconds
-    </li>
-    <li>
-      Fastest Barista in the Last Hour:<br>
-      <span class="username">
-        {{fastestBarista.username}}
-      </span>
-      <span class="email">
-        &lt; {{fastestBarista.emailAddress}} &gt;
-      </span>
+  <div id="stats" class="main-lane box">
+    <ul>
+      <li>
+        Average Wait Time in the Last Hour:<br>
+        {{averageWaitTime}} Seconds
+      </li>
+      <li>
+        Fastest Barista in the Last Hour:<br>
+        <span class="username">
+          {{fastestBarista.username}}
+        </span>
+        <span class="email">
+          &lt; {{fastestBarista.emailAddress}} &gt;
+        </span>
 
-      <span class="fastestTime">
-        {{fastestBarista.fastestTime}} seconds
-      </span>
-    </li>
-  </ul>
-</template>
-
-<template name="barista">
-  {{> loginButtons}}
+        <span class="fastestTime">
+          {{fastestBarista.fastestTime}} seconds
+        </span>
+      </li>
+    </ul>
+  </div>
 </template>

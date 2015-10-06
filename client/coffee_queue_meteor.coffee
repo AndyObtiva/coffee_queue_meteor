@@ -93,6 +93,7 @@ Template.stats.helpers
         averageTime += (order.fulfillmentTime())
         count += 1
     )
+    return 0 if count == 0
     (averageTime / count) / 1000
 
   averageWaitTime : ->

@@ -5,25 +5,24 @@
       <h2>Express Coffee Service</h2>
       {{> loginButtons}}
     <!-- </div> -->
-    <ul>
-      <li>
-        Average Wait Time: {{averageWaitTime}} Seconds
-      </li>
+    <table>
+      <tr>
+        <th>Average Wait Time</th><td>{{averageWaitTime}} sec</td>
+      </tr>
       {{#if fastestBarista}}
-      <li>
-        Fastest Barista:<br>
-        <span class="username">
+      <tr>
+        <th>Fastest Barista</th>
+        <td class="username">
           {{fastestBarista.username}}
-        </span>
-        <span class="email">
-          &lt; {{fastestBarista.emailAddress}} &gt;
-        </span>
-
-        <span class="fastestTime">
-          {{fastestBarista.fastestTime}} seconds
-        </span>
-      </li>
+        </td>
+      </tr>
+      <tr>
+        <th>Fastest Service Time</th>
+        <td class="fastestTime">
+          {{fastestBarista.fastestTime}} sec
+        </td>
+      </tr>
       {{/if}}
-    </ul>
+    </table>
   </div>
 </template>

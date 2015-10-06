@@ -1,13 +1,17 @@
 <template name="stats">
   <div id="stats" class="step box">
+    <!-- <div id="barista_actions" class="main-lane box"> -->
+      <h1>CoffeeQueue</h1>
+      <h2>Express Coffee Service</h2>
+      {{> loginButtons}}
+    <!-- </div> -->
     <ul>
       <li>
-        Average Wait Time in the Last Hour:<br>
-        {{averageWaitTime}} Seconds
+        Average Wait Time: {{averageWaitTime}} Seconds
       </li>
       {{#if fastestBarista}}
       <li>
-        Fastest Barista in the Last Hour:<br>
+        Fastest Barista:<br>
         <span class="username">
           {{fastestBarista.username}}
         </span>

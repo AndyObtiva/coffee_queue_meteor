@@ -1,27 +1,30 @@
-@media (max-device-width: 480px)
+@media (min-device-width: 481px) and (max-device-width: 1024px)
   html
     body
-      font-size 2.5rem
-      background-size auto 100vh
-
       #order_list.main-lane
         clear none
 
-      #stats, #order_list .box, #coffee_request_form
+      #barista_actions, #coffee_request_form, #order_list .box, #stats
         float left !important
         clear none !important
-        padding 20px
-        margin 20px !important
-        width 90vw !important
-        max-width 90vw !important
-        height auto !important
+        padding 2vh 2vw !important
+        margin 2vh 2vw !important
+        height 42vh !important
+        max-height 42vh !important
+        width 42vw !important
+        max-width 42vw !important
 
-      #order_list .box
-        height auto !important
-        min-height 30vh !important
-        max-height 90vh !important
+      // #stats
+      //   float left !important
+      //   clear none !important
+      //   padding 2vh 2vw !important
+      //   margin 2vh 2vw !important
+      //   height 20vh !important
+      //   max-height 20vh !important
+      //   width 92vw !important
+      //   max-width 92vw !important
 
-      #stats
+      #barista_actions
         #login-buttons.login-buttons-dropdown-align-
           .login-link-and-dropdown-list.login-form-sign-in
             .login-link-text
@@ -35,14 +38,13 @@
 
             input[type=text]
               margin-bottom 0px
-              font-size 40px
 
             select, input[type=submit]
               width 100%
               max-width 100%
               border 1px solid #aaa
               margin-top 20px
-              font-size 40px
+
 
           .row:nth-of-type(1)
             padding-right 6px

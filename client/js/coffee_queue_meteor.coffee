@@ -109,7 +109,8 @@ Template.stats.helpers
       barista.fastestTime = parseInt((if customerOrders.length then fastestOrder.fulfillmentTime() else 999999)/1000)
 
     fastest = _.min baristas, (barista) -> barista.fastestTime
-    fastest.emailAddress = fastest.emails && fastest.emails[0].address
+    return null unless fastest? && fastest.emails?
+    fastest.emailAddress = fastest.emails[0].address
     fastest
 
 

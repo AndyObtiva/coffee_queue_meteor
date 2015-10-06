@@ -1,0 +1,22 @@
+<template name="orderForm">
+  <div id="coffee_request_form" class="step box">
+    <form id="orderForm">
+      <div class="row">
+        <input id="name" type="text" placeholder="Enter Name">
+      </div>
+      <div class="row">
+        <select id="productName">
+          {{#each products}}
+          <option>{{name}}</option>
+          {{/each}}
+        </select>
+        <select id="productOptionName">
+          {{#each productOptions}}
+          <option>{{name}}</option>
+          {{/each}}
+        </select>
+        <input type="submit" value="Request Coffee">
+      </div>
+    </form>
+  </div>
+</template>

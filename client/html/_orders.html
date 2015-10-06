@@ -1,0 +1,49 @@
+<template name="orders">
+  <div id="order_list" class="main-lane">
+    <div id="waiting" class="step box">
+      <h1>Waiting for Order</h1>
+      {{#if noOrdersInProgress}}
+      <p>No orders are currently in progress. Faster than the line!</p>
+      {{/if}}
+      <table>
+        {{#each ordersInProgress}}
+        <tr>
+          <td>
+            {{name}}
+          </td>
+          <td>
+            ({{product.name}} {{productOption.name}})
+          </td>
+          <td>
+            {{#if currentUser}}
+              <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
+              <input type="button" value="Fulfill" data-name="{{name}}" data-id="{{_id}}">
+            {{/if}}
+          </td>
+        </tr>
+        {{/each}}
+      </table>
+    </div>
+    <div id="ready" class="step box">
+      <h1>Ready for Pickup</h1>
+      <table>
+        {{#each readyOrders}}
+        <tr>
+          <td>
+            {{name}}
+          </td>
+          <td>
+            ({{product.name}} - {{productOption.name}})
+          </td>
+          <td>
+            {{#if currentUser}}
+              <!-- assumes name is unique at the moment TODO handle implications/scaling to non-unique names -->
+              <input type="button" value="Serve" data-name="{{name}}" data-id="{{_id}}">
+            {{/if}}
+          </td>
+        </tr>
+        {{/each}}
+      </table>
+    </div>
+  </div>
+</template>

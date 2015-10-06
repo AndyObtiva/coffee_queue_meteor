@@ -8,7 +8,7 @@ formDescriptionObject = {
   }
 }
 Mesosphere(formDescriptionObject)
-Template.order.helpers
+Template.orderForm.helpers
   products: ->
     Products.find().fetch()
 
@@ -21,7 +21,7 @@ Template.loginButtons.events
     $('#login-dropdown-list').css('opacity', 0)
     $('#login-dropdown-list').animate('opacity': 1)
 
-Template.order.events
+Template.orderForm.events
   'change select#productName' : (event) ->
     Session.set("productName", $('select#productName').val())
   ,
@@ -109,7 +109,7 @@ Template.stats.helpers
       barista.fastestTime = parseInt((if customerOrders.length then fastestOrder.fulfillmentTime() else 999999)/1000)
 
     fastest = _.min baristas, (barista) -> barista.fastestTime
-    fastest.emailAddress = fastest.emails[0].address
+    fastest.emailAddress = fastest.emails && fastest.emails[0].address
     fastest
 
 

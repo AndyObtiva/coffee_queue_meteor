@@ -12,3 +12,5 @@ coffeescript
 stylus
 copleykj:mesosphere
 momentjs:moment
+jhartma:cjsx
+react

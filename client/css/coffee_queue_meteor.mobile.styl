@@ -10,8 +10,40 @@
       font-size 2.5rem
 
       .box
+        overflow visible
         &.step
           max-height none
+
+      #login-dropdown-list
+        font-size 2.5rem
+        // transition-property left, top, width, height, opacity, z-index
+        // transition-duration 2s
+        width 66vw
+        left -24vw
+
+        .additional-link-container
+          display block
+
+          .additional-link
+            display block
+            float none
+
+        input[type=text]
+          margin-bottom 0px
+          font-size 40px
+
+        select, input[type=submit]
+          width 100%
+          max-width 100%
+          border 1px solid #aaa
+          margin-top 20px
+          font-size 40px
+
+      #login-buttons #signup-link
+        float none
+
+      #login-buttons #forgot-password-link
+        float none
 
       #body-content
         height auto
@@ -41,12 +73,6 @@
         input[type=button]
           border 1px solid #aaa
           font-size 40px
-
-      #stats
-        #login-buttons.login-buttons-dropdown-align-
-          .login-link-and-dropdown-list.login-form-sign-in
-            .login-link-text
-              font-size 32px
 
       #coffee_request_form
         #orderForm

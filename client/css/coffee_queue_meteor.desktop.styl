@@ -78,12 +78,31 @@ html
       max-height 100vh
       overflow auto
 
-    #coffee_request_form .error::after
-      content "not valid"
+    #login-buttons.login-buttons-dropdown-align-
+      .login-link-and-dropdown-list.login-form-sign-in
+        a.login-link-text
+          font-family 'Russo One', sans-serif
+          font-size 1.1em
 
     #login-dropdown-list
-      top -155px
-      left -55px
+      top 0
+      left -90px
+
+      *
+        font-family 'Russo One', sans-serif
+        font-size 1em
+
+    #login-buttons .login-button, .accounts-dialog .login-button
+      font-family 'Russo One', sans-serif
+      font-size 1em
+      color black
+      background #aaa
+      border 2px outset buttonface
+
+
+
+    #coffee_request_form .error::after
+      content "not valid"
 
     #coffee_request_form
       text-align center
